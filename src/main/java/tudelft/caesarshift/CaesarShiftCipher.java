@@ -2,27 +2,24 @@ package tudelft.caesarshift;
 
 public class CaesarShiftCipher {
 
-    public String CaesarShiftCipher(String message, int shift){
+    public String caesarShiftCipher(String message, int shift) {
         StringBuilder sb = new StringBuilder();
-        char currentChar;
-        int length = message.length();
-
-        shift = shift%26;
-
-        for(int i = 0; i < length; i++){
-            currentChar = message.charAt(i);
-           
-            sb.append(currentChar);
-            if (currentChar > 'z' || currentChar < 'a') {
+        shift = shift % 26;
+        for (char currentChar : message.toCharArray()) {
+            if (currentChar >= 'a' && currentChar <= 'z') {
+                int newChar = currentChar + shift;
+                if (newChar > 'z') {
+                    newChar -= 26;
+                } else if (newChar < 'a') {
+                    newChar += 26;
+                }
+                sb.append((char) newChar);
+            } else if (currentChar == ' ') {
+                sb.append(currentChar);
+            } else {
                 return "invalid";
-            } else if ((char) (currentChar + shift) > 'z') {
-                currentChar = (char) (currentChar - 26);
-            } else if ((char) (currentChar + shift) < 'a'){
-                currentChar = (char) (currentChar + 26);
             }
-            sb.append((char) (currentChar + shift));
         }
-
         return sb.toString();
     }
 }
